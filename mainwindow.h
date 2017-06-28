@@ -44,6 +44,8 @@ private:
     void createInfoLabel();
     void createWindow();
     void createFormGoupBox();
+    void createSystemGroupBox();
+    void readFile();
 
 
     QGroupBox *formGroupBox;
