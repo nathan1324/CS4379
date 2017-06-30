@@ -44,14 +44,19 @@ private:
     void createInfoLabel();
     void createWindow();
     void createFormGoupBox();
-    void createSystemGroupBox();
+    void createChecksGroupBox();
+    void createDisplayFormGroupBox();
     void readFile();
 
-
     QGroupBox *formGroupBox;
+    QGroupBox *replaceGroupBox;
+    QGroupBox *cacheGroupBox;
+    QGroupBox *displayGroupBox;
+
     QMenu *fileMenu;
     QMenu *functionMenu;
     QMenu *helpMenu;
+
     QAction *newAct;
     QAction *openAct;
     QAction *saveAct;
@@ -61,6 +66,7 @@ private:
     QAction *goAct;
     QAction *stepAct;
     QAction *breakAct;
+
     QLabel *infoLabel;
     QLabel *memLabel;
     QLabel *replacementLabel;
@@ -72,20 +78,26 @@ private:
     QLabel *indexLabel;
     QLabel *tagLabel;
     QLabel *waysLabel;
+
     QSpinBox *memSpinBox;
     QSpinBox *byteSpinBox;
     QSpinBox *setsSpinBox;
     QSpinBox *waysSpinBox;
+
     QCheckBox *checkbox1;
     QCheckBox *checkbox2;
     QCheckBox *checkbox3;
+
     QRadioButton *button1;
     QRadioButton *button2;
+
     QLCDNumber *display1;
     QLCDNumber *display2;
     QLCDNumber *display3;
     QLCDNumber *display4;
+
     QTextEdit *textEdit;
+
     QDial *memDial;
 };
 

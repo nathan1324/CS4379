@@ -12,8 +12,8 @@ MainWindow::MainWindow()
     createMenus();
     createInfoLabel();
     createFormGoupBox();
-    //createSystemGroupBox();
-    //createOutputFormGroupBox();
+    createChecksGroupBox();
+    createDisplayFormGroupBox();
 
 //    QWidget *topFiller = new QWidget;
 //    topFiller->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -23,95 +23,88 @@ MainWindow::MainWindow()
 //    setLabel = new QLabel("Number of Sets:");
 //    waysLabel = new QLabel("Number of Ways:");
 //    bytesLabel = new QLabel("Number of Bytes Per Block:");
-    refWordLabel = new QLabel("Size of a reference word (in bits):");
-    offsetLabel = new QLabel("Size of the offset field (in bits):");
-    indexLabel = new QLabel("Size of the index field (in bits):");
-    tagLabel = new QLabel("Size of the tag field (in bits):");
 
-    byteSpinBox = new QSpinBox();
-    setsSpinBox = new QSpinBox();
-    waysSpinBox = new QSpinBox();
+//    checkbox1 = new QCheckBox("LRU",widget);
+//    checkbox2 = new QCheckBox("LFU",widget);
+//    checkbox3 = new QCheckBox("Random", widget);
 
-    checkbox1 = new QCheckBox("LRU",widget);
-    checkbox2 = new QCheckBox("LFU",widget);
-    checkbox3 = new QCheckBox("Random", widget);
-
-    button1 = new QRadioButton("Instruction", widget);
-    button2 = new QRadioButton("Data", widget);
-
-    display1 = new QLCDNumber(2);
-    display2 = new QLCDNumber(2);
-    display3 = new QLCDNumber(2);
-    display4 = new QLCDNumber(2);
+//    button1 = new QRadioButton("Instruction", widget);
+//    button2 = new QRadioButton("Data", widget);
 
     textEdit = new QTextEdit();
 
     textEdit->setPlainText(tr("This widget takes file (File|Open)"));
 
-    checkbox1->setCheckable(true);
-    checkbox2->setCheckable(true);
-    checkbox3->setCheckable(true);
-    button1->setCheckable(true);
-    button1->setText("Instruction");
-    button2->setCheckable(true);
-    button2->setText("Data");
+//    checkbox1->setCheckable(true);
+//    checkbox2->setCheckable(true);
+//    checkbox3->setCheckable(true);
+//    button1->setCheckable(true);
+//    button1->setText("Instruction");
+//    button2->setCheckable(true);
+//    button2->setText("Data");
 
-    byteSpinBox->setRange(2, 1024);
-    byteSpinBox->setSuffix(" bytes per block");
-    byteSpinBox->setValue(4);
-    byteSpinBox->setSingleStep(2);
+//    byteSpinBox->setRange(2, 1024);
+//    byteSpinBox->setSuffix(" bytes per block");
+//    byteSpinBox->setValue(4);
+//    byteSpinBox->setSingleStep(2);
 
-    setsSpinBox->setRange(0,50);
-    setsSpinBox->setWrapping(true);
-    setsSpinBox->setValue(0);
-    waysSpinBox->setRange(0,50);
-    waysSpinBox->setWrapping(true);
-    waysSpinBox->setValue(0);
+//    setsSpinBox->setRange(0,50);
+//    setsSpinBox->setWrapping(true);
+//    setsSpinBox->setValue(0);
+//    waysSpinBox->setRange(0,50);
+//    waysSpinBox->setWrapping(true);
+//    waysSpinBox->setValue(0);
 
-    QButtonGroup *boxGroup = new QButtonGroup;
-    boxGroup->addButton(checkbox1);
-    boxGroup->addButton(checkbox2);
-    boxGroup->addButton(checkbox3);
-    boxGroup->setExclusive(true);
-    QHBoxLayout *boxLayout = new QHBoxLayout;
-    boxLayout->addWidget(checkbox1);
-    boxLayout->addWidget(checkbox2);
-    boxLayout->addWidget(checkbox3);
+//    QButtonGroup *boxGroup = new QButtonGroup;
+//    boxGroup->addButton(checkbox1);
+//    boxGroup->addButton(checkbox2);
+//    boxGroup->addButton(checkbox3);
+//    boxGroup->setExclusive(true);
+//    QHBoxLayout *boxLayout = new QHBoxLayout;
+//    boxLayout->addWidget(checkbox1);
+//    boxLayout->addWidget(checkbox2);
+//    boxLayout->addWidget(checkbox3);
 
-    QButtonGroup *buttonGroup = new QButtonGroup;
-    buttonGroup->addButton(button1);
-    buttonGroup->addButton(button2);
-    buttonGroup->setExclusive(true);
-    QHBoxLayout *buttonLayout = new QHBoxLayout;
-    buttonLayout->addWidget(button1);
-    buttonLayout->addWidget(button2);
+//    QButtonGroup *buttonGroup = new QButtonGroup;
+//    buttonGroup->addButton(button1);
+//    buttonGroup->addButton(button2);
+//    buttonGroup->setExclusive(true);
+//    QHBoxLayout *buttonLayout = new QHBoxLayout;
+//    buttonLayout->addWidget(button1);
+//    buttonLayout->addWidget(button2);
 
 //    QWidget *bottomFiller = new QWidget;
 //    bottomFiller->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    QVBoxLayout *hLayout = new QVBoxLayout;
-    hLayout->setMargin(5);
-    hLayout->addWidget(refWordLabel);
-    hLayout->addWidget(display1);
-    hLayout->addWidget(offsetLabel);
-    hLayout->addWidget(display2);
-    hLayout->addWidget(indexLabel);
-    hLayout->addWidget(display3);
-    hLayout->addWidget(tagLabel);
-    hLayout->addWidget(display4);
+//    QVBoxLayout *hLayout = new QVBoxLayout;
+//    hLayout->setMargin(5);
+//    hLayout->addWidget(refWordLabel);
+//    hLayout->addWidget(display1);
+//    hLayout->addWidget(offsetLabel);
+//    hLayout->addWidget(display2);
+//    hLayout->addWidget(indexLabel);
+//    hLayout->addWidget(display3);
+//    hLayout->addWidget(tagLabel);
+//    hLayout->addWidget(display4);
 
+/*
+ * Main layout construct
+ *
+ */
     QVBoxLayout *layout = new QVBoxLayout;
     layout->setMargin(5);
     layout->addWidget(infoLabel);
 //    layout->addWidget(topFiller);
 //    layout->addWidget(bottomFiller);
     layout->addWidget(textEdit);
-    layout->addWidget(replacementLabel);
-    layout->addLayout(boxLayout);
-    layout->addWidget(cacheLabel);
-    layout->addLayout(buttonLayout);
+//    layout->addWidget(replacementLabel);
+    layout->addWidget(replaceGroupBox);
+//    layout->addLayout(boxLayout);
+//    layout->addWidget(cacheLabel);
+    layout->addWidget(cacheGroupBox);
+//    layout->addLayout(buttonLayout);
     layout->addWidget(formGroupBox);
-    layout->addLayout(hLayout);
+    layout->addWidget(displayGroupBox);
     widget->setLayout(layout);
 }
 
@@ -226,8 +219,44 @@ void MainWindow:: createInfoLabel()
 /*
  * Creates format for policy and
  */
-void MainWindow::createSystemGroupBox()
+void MainWindow::createChecksGroupBox()
 {
+    checkbox1 = new QCheckBox("LRU");
+    checkbox2 = new QCheckBox("LFU");
+    checkbox3 = new QCheckBox("Random");
+
+    button1 = new QRadioButton("Instruction");
+    button2 = new QRadioButton("Data");
+
+    replaceGroupBox = new QGroupBox(tr("Replacement Policies:"));
+    QButtonGroup *boxGroup = new QButtonGroup;
+    boxGroup->addButton(checkbox1);
+    boxGroup->addButton(checkbox2);
+    boxGroup->addButton(checkbox3);
+    boxGroup->setExclusive(true);
+    QHBoxLayout *boxLayout = new QHBoxLayout;
+    boxLayout->addWidget(checkbox1);
+    boxLayout->addWidget(checkbox2);
+    boxLayout->addWidget(checkbox3);
+    replaceGroupBox->setLayout(boxLayout);
+
+    cacheGroupBox = new QGroupBox(tr("Cache Type:"));
+    QButtonGroup *buttonGroup = new QButtonGroup;
+    buttonGroup->addButton(button1);
+    buttonGroup->addButton(button2);
+    buttonGroup->setExclusive(true);
+    QHBoxLayout *buttonLayout = new QHBoxLayout;
+    buttonLayout->addWidget(button1);
+    buttonLayout->addWidget(button2);
+    cacheGroupBox->setLayout(buttonLayout);
+
+    checkbox1->setCheckable(true);
+    checkbox2->setCheckable(true);
+    checkbox3->setCheckable(true);
+    button1->setCheckable(true);
+    button1->setText("Instruction");
+    button2->setCheckable(true);
+    button2->setText("Data");
 
 }
 
@@ -261,7 +290,7 @@ void MainWindow::createFormGoupBox()
     connect(memDial, SIGNAL(valueChanged(int)),
                      memSpinBox, SLOT(setValue(int)));
 
-    formGroupBox = new QGroupBox(tr(""));
+    formGroupBox = new QGroupBox(tr("Inputs:"));
     QFormLayout *formLayout = new QFormLayout;
     formLayout->addRow(memLabel);
     formLayout->addRow(memLayout);
@@ -273,73 +302,104 @@ void MainWindow::createFormGoupBox()
 
 
 /*
- * Reading file in on a fixed number of lines.
+ * Creates the output display
  *
  */
-void MainWindow::readFile(){
-    infoLabel->setText(tr("Invoked <b>File|Open</b>"));
-    QString filename="trace.txt";
-    QString path = QDir::currentPath();
-    QFile file("//Users//nathan1324//Desktop//trace.txt");
-    //file.open(QIODevice::ReadOnly);
-    if(!file.exists()){
-        qDebug() << "File cannot be found "<<filename;
-        qDebug() << " " << path;
-    }else{
-        qDebug() << filename<<" Opening...";
-    }
-    QString line;
-    textEdit->clear();
-    if (file.open(QIODevice::ReadOnly | QIODevice::Text)){
-        QTextStream stream(&file);
-        for(int i = 0; i < 10; i++){
-            line = stream.readLine();
-            if(!line.isNull()){
-                textEdit->append("0x"+line);
-                qDebug() << "line: "<<line;
-            }
-        }
-    }
-    file.close();
+void MainWindow::createDisplayFormGroupBox()
+{
+    display1 = new QLCDNumber(2);
+    display2 = new QLCDNumber(2);
+    display3 = new QLCDNumber(2);
+    display4 = new QLCDNumber(2);
+    refWordLabel = new QLabel("Size of a reference word (in bits):");
+    offsetLabel = new QLabel("Size of the offset field (in bits):");
+    indexLabel = new QLabel("Size of the index field (in bits):");
+    tagLabel = new QLabel("Size of the tag field (in bits):");
+
+    displayGroupBox = new QGroupBox(tr("Displays:"));
+    QVBoxLayout *hLayout = new QVBoxLayout;
+    hLayout->setMargin(5);
+    hLayout->addWidget(refWordLabel);
+    hLayout->addWidget(display1);
+    hLayout->addWidget(offsetLabel);
+    hLayout->addWidget(display2);
+    hLayout->addWidget(indexLabel);
+    hLayout->addWidget(display3);
+    hLayout->addWidget(tagLabel);
+    hLayout->addWidget(display4);
+    displayGroupBox->setLayout(hLayout);
+
 }
 
-/*
- * Reading file in until end of file.
- *
- */
-//void MainWindow::readFile()
-//{
 
-//        infoLabel->setText(tr("Invoked <b>File|Open</b>"));
-//        QString filename = "trace.txt";
-//        QString path = QDir::currentPath();
-//        QFile file("//Users//nathan1324//Desktop//trace.txt");
-//        if(!file.exists()){
-//            qDebug() << "File cannot be found "<<filename;
-//            qDebug() << " " << path;
-//            return;
-//        }
-
-//        QString line;
-//        textEdit->clear();
-//        if (!file.open(QIODevice::ReadOnly | QIODevice::Text)){
-//            qDebug() << "Could not open file" << filename;
-//            return;
-//        }
-
+///*
+// * Reading file in on a fixed number of lines.
+// *
+// */
+//void MainWindow::readFile(){
+//    infoLabel->setText(tr("Invoked <b>File|Open</b>"));
+//    QString filename="trace.txt";
+//    QString path = QDir::currentPath();
+//    QFile file("//Users//nathan1324//Desktop//trace.txt");
+//    //file.open(QIODevice::ReadOnly);
+//    if(!file.exists()){
+//        qDebug() << "File cannot be found "<<filename;
+//        qDebug() << " " << path;
+//    }else{
 //        qDebug() << filename<<" Opening...";
-
+//    }
+//    QString line;
+//    textEdit->clear();
+//    if (file.open(QIODevice::ReadOnly | QIODevice::Text)){
 //        QTextStream stream(&file);
-
-//        while (!stream.atEnd()) {
+//        for(int i = 0; i < 10; i++){
 //            line = stream.readLine();
 //            if(!line.isNull()){
 //                textEdit->append("0x"+line);
 //                qDebug() << "line: "<<line;
 //            }
 //        }
-//        file.close();
+//    }
+//    file.close();
 //}
+
+/*
+ * Reading file in until end of file.
+ *
+ */
+void MainWindow::readFile()
+{
+
+        infoLabel->setText(tr("Invoked <b>File|Open</b>"));
+        QString filename = "trace.txt";
+        QString path = QDir::currentPath();
+        QFile file("//Users//nathan1324//Desktop//trace.txt");
+        if(!file.exists()){
+            qDebug() << "File cannot be found "<<filename;
+            qDebug() << " " << path;
+            return;
+        }
+
+        QString line;
+        textEdit->clear();
+        if (!file.open(QIODevice::ReadOnly | QIODevice::Text)){
+            qDebug() << "Could not open file" << filename;
+            return;
+        }
+
+        qDebug() << filename<<" Opening...";
+
+        QTextStream stream(&file);
+
+        while (!stream.atEnd()) {
+            line = stream.readLine();
+            if(!line.isNull()){
+                textEdit->append("0x"+line);
+                qDebug() << "line: "<<line;
+            }
+        }
+        file.close();
+}
 
 void MainWindow::newFile()
 {
