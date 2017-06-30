@@ -15,6 +15,7 @@ class QAction;
 class QActionGroup;
 class QLabel;
 class QMenu;
+class GLobj;
 
 class MainWindow : public QMainWindow
 {
@@ -22,6 +23,7 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow();
+    GLobj *globj;
 
 protected:
 #ifndef QT_NO_CONTEXTMENU

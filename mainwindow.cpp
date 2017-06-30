@@ -1,11 +1,14 @@
 #include <QtWidgets>
 
 #include "mainwindow.h"
+#include "globj.h"
 
 MainWindow::MainWindow()
 {
     QWidget *widget = new QWidget;
     setCentralWidget(widget);
+
+    globj = new GLobj(this);
 
     createWindow();
     createActions();
@@ -18,74 +21,14 @@ MainWindow::MainWindow()
 //    QWidget *topFiller = new QWidget;
 //    topFiller->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    replacementLabel = new QLabel("Replacement Policies:");
-    cacheLabel = new QLabel("Cache Type:");
-//    setLabel = new QLabel("Number of Sets:");
-//    waysLabel = new QLabel("Number of Ways:");
-//    bytesLabel = new QLabel("Number of Bytes Per Block:");
+//    replacementLabel = new QLabel("Replacement Policies:");
+//    cacheLabel = new QLabel("Cache Type:");
 
-//    checkbox1 = new QCheckBox("LRU",widget);
-//    checkbox2 = new QCheckBox("LFU",widget);
-//    checkbox3 = new QCheckBox("Random", widget);
-
-//    button1 = new QRadioButton("Instruction", widget);
-//    button2 = new QRadioButton("Data", widget);
-
-    textEdit = new QTextEdit();
-
-    textEdit->setPlainText(tr("This widget takes file (File|Open)"));
-
-//    checkbox1->setCheckable(true);
-//    checkbox2->setCheckable(true);
-//    checkbox3->setCheckable(true);
-//    button1->setCheckable(true);
-//    button1->setText("Instruction");
-//    button2->setCheckable(true);
-//    button2->setText("Data");
-
-//    byteSpinBox->setRange(2, 1024);
-//    byteSpinBox->setSuffix(" bytes per block");
-//    byteSpinBox->setValue(4);
-//    byteSpinBox->setSingleStep(2);
-
-//    setsSpinBox->setRange(0,50);
-//    setsSpinBox->setWrapping(true);
-//    setsSpinBox->setValue(0);
-//    waysSpinBox->setRange(0,50);
-//    waysSpinBox->setWrapping(true);
-//    waysSpinBox->setValue(0);
-
-//    QButtonGroup *boxGroup = new QButtonGroup;
-//    boxGroup->addButton(checkbox1);
-//    boxGroup->addButton(checkbox2);
-//    boxGroup->addButton(checkbox3);
-//    boxGroup->setExclusive(true);
-//    QHBoxLayout *boxLayout = new QHBoxLayout;
-//    boxLayout->addWidget(checkbox1);
-//    boxLayout->addWidget(checkbox2);
-//    boxLayout->addWidget(checkbox3);
-
-//    QButtonGroup *buttonGroup = new QButtonGroup;
-//    buttonGroup->addButton(button1);
-//    buttonGroup->addButton(button2);
-//    buttonGroup->setExclusive(true);
-//    QHBoxLayout *buttonLayout = new QHBoxLayout;
-//    buttonLayout->addWidget(button1);
-//    buttonLayout->addWidget(button2);
+//    textEdit = new QTextEdit();
+//    textEdit->setPlainText(tr("This widget takes file (File|Open)"));
 
 //    QWidget *bottomFiller = new QWidget;
 //    bottomFiller->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-
-//    QVBoxLayout *hLayout = new QVBoxLayout;
-//    hLayout->setMargin(5);
-//    hLayout->addWidget(refWordLabel);
-//    hLayout->addWidget(display1);
-//    hLayout->addWidget(offsetLabel);
-//    hLayout->addWidget(display2);
-//    hLayout->addWidget(indexLabel);
-//    hLayout->addWidget(display3);
-//    hLayout->addWidget(tagLabel);
-//    hLayout->addWidget(display4);
 
 /*
  * Main layout construct
@@ -96,15 +39,12 @@ MainWindow::MainWindow()
     layout->addWidget(infoLabel);
 //    layout->addWidget(topFiller);
 //    layout->addWidget(bottomFiller);
-    layout->addWidget(textEdit);
-//    layout->addWidget(replacementLabel);
+//    layout->addWidget(textEdit);
     layout->addWidget(replaceGroupBox);
-//    layout->addLayout(boxLayout);
-//    layout->addWidget(cacheLabel);
     layout->addWidget(cacheGroupBox);
-//    layout->addLayout(buttonLayout);
     layout->addWidget(formGroupBox);
     layout->addWidget(displayGroupBox);
+    layout->addWidget(globj);
     widget->setLayout(layout);
 }
 
@@ -122,7 +62,7 @@ void MainWindow::contextMenuEvent(QContextMenuEvent *event)
  */
 void MainWindow::createWindow()
 {
-    setWindowTitle(tr("Assignment I2"));
+    setWindowTitle(tr("Assignment I3"));
     setMinimumSize(300, 300);
     resize(500, 800);
 
@@ -214,6 +154,7 @@ void MainWindow:: createInfoLabel()
                               " inputs</i>"));
     infoLabel->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
     infoLabel->setAlignment(Qt::AlignCenter);
+    infoLabel->setMaximumHeight(20);
 }
 
 /*
@@ -311,57 +252,32 @@ void MainWindow::createDisplayFormGroupBox()
     display2 = new QLCDNumber(2);
     display3 = new QLCDNumber(2);
     display4 = new QLCDNumber(2);
-    refWordLabel = new QLabel("Size of a reference word (in bits):");
-    offsetLabel = new QLabel("Size of the offset field (in bits):");
-    indexLabel = new QLabel("Size of the index field (in bits):");
-    tagLabel = new QLabel("Size of the tag field (in bits):");
+//    refWordLabel = new QLabel("Size of a reference word (in bits):");
+//    offsetLabel = new QLabel("Size of the offset field (in bits):");
+//    indexLabel = new QLabel("Size of the index field (in bits):");
+//    tagLabel = new QLabel("Size of the tag field (in bits):");
 
     displayGroupBox = new QGroupBox(tr("Displays:"));
-    QVBoxLayout *hLayout = new QVBoxLayout;
-    hLayout->setMargin(5);
-    hLayout->addWidget(refWordLabel);
-    hLayout->addWidget(display1);
-    hLayout->addWidget(offsetLabel);
-    hLayout->addWidget(display2);
-    hLayout->addWidget(indexLabel);
-    hLayout->addWidget(display3);
-    hLayout->addWidget(tagLabel);
-    hLayout->addWidget(display4);
-    displayGroupBox->setLayout(hLayout);
+    QFormLayout *formLayout = new QFormLayout;
+    formLayout->addRow("Size of a reference word (in bits):", display1);
+    formLayout->addRow("Size of the offset field (in bits):", display2);
+    formLayout->addRow("Size of the index field (in bits):", display3);
+    formLayout->addRow("Size of the tag field (in bits):", display4);
 
+//    QVBoxLayout *hLayout = new QVBoxLayout;
+//    hLayout->setMargin(5);
+//    hLayout->addWidget(refWordLabel);
+//    hLayout->addWidget(display1);
+//    hLayout->addWidget(offsetLabel);
+//    hLayout->addWidget(display2);
+//    hLayout->addWidget(indexLabel);
+//    hLayout->addWidget(display3);
+//    hLayout->addWidget(tagLabel);
+//    hLayout->addWidget(display4);
+
+    displayGroupBox->setLayout(formLayout);
 }
 
-
-///*
-// * Reading file in on a fixed number of lines.
-// *
-// */
-//void MainWindow::readFile(){
-//    infoLabel->setText(tr("Invoked <b>File|Open</b>"));
-//    QString filename="trace.txt";
-//    QString path = QDir::currentPath();
-//    QFile file("//Users//nathan1324//Desktop//trace.txt");
-//    //file.open(QIODevice::ReadOnly);
-//    if(!file.exists()){
-//        qDebug() << "File cannot be found "<<filename;
-//        qDebug() << " " << path;
-//    }else{
-//        qDebug() << filename<<" Opening...";
-//    }
-//    QString line;
-//    textEdit->clear();
-//    if (file.open(QIODevice::ReadOnly | QIODevice::Text)){
-//        QTextStream stream(&file);
-//        for(int i = 0; i < 10; i++){
-//            line = stream.readLine();
-//            if(!line.isNull()){
-//                textEdit->append("0x"+line);
-//                qDebug() << "line: "<<line;
-//            }
-//        }
-//    }
-//    file.close();
-//}
 
 /*
  * Reading file in until end of file.
@@ -369,7 +285,6 @@ void MainWindow::createDisplayFormGroupBox()
  */
 void MainWindow::readFile()
 {
-
         infoLabel->setText(tr("Invoked <b>File|Open</b>"));
         QString filename = "trace.txt";
         QString path = QDir::currentPath();
