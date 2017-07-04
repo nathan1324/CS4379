@@ -23,6 +23,7 @@ void GLobj::initializeGL()
     glClearDepth(1.0f);
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
+    //glOrtho(-1.0,1.0,-1.0,1.0,-1.0,1.0);
 }
 
 //Set up the viewport based on the screen dimensions
@@ -30,7 +31,7 @@ void GLobj::initializeGL()
 void GLobj::resizeGL( int w, int h )
 {
     //algorithm to keep scene "square" (preserve aspect ratio)
-    //even if screen is streached
+    //even if screen is stretched
     if(w>h)
         glViewport((w-h)/2, 0, h, h);
     else
@@ -42,8 +43,6 @@ void GLobj::resizeGL( int w, int h )
     glOrtho(-1, 1, -1, 1, -1, 1);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-
-    //implicit call to paintGL after resized
 }
 
 //Paints the GL scene
@@ -52,6 +51,7 @@ void GLobj::paintGL()
     glClear (GL_COLOR_BUFFER_BIT);
     glClear(GL_DEPTH_BUFFER_BIT);
 
+    float full = 1.0;
     float radius = 0.5;
     float halfRadius = 0.25;
 
@@ -63,10 +63,10 @@ void GLobj::paintGL()
     glEnd();
 
     //Draws line
-    GLfloat vertex1[] = {-1.0, 0.0, 0.0};
+    GLfloat vertex1[] = {-full, 0.0, 0.0};
     GLfloat vertex2[] = {-0.80, 0.0, 0.0};
     glBegin(GL_LINES);
-    glColor3f (0.0, 0.0, 1.0);
+    glColor3f (0.0, 0.0, full);
     glNormal3f(0, 0, 1);
     glVertex3fv(vertex1);
     glVertex3fv(vertex2);
@@ -88,8 +88,8 @@ void GLobj::paintGL()
     glColor3f (1.0, 0.0, 0.0);
     glVertex3f(-halfRadius, halfRadius,  0.0);
     glVertex3f( 0.05, halfRadius,  0.0);
-    glVertex3f( 0.05,  1.0,  0.0);
-    glVertex3f(-halfRadius,  1.0,  0.0);
+    glVertex3f( 0.05,  full,  0.0);
+    glVertex3f(-halfRadius,  full,  0.0);
 
     //Draws hex
     GLfloat v1[] = {0.05, -0.75, 0.0}; //far right point
@@ -109,14 +109,14 @@ void GLobj::paintGL()
     glEnd();
 
     //Draws Cube
-    GLfloat v7[] = {1.0, -0.5, -0.5};
-    GLfloat v8[] = {1.0, 0.5, -0.5};
-    GLfloat v9[] = {0.5, 0.5, -0.5};
-    GLfloat v10[] = {0.5, -0.5, -0.5};
-    GLfloat v11[] = {1.0, -0.5, 0.5};
-    GLfloat v12[] = {1.0, 0.5, 0.5};
-    GLfloat v13[] = {0.5, 0.5, 0.5};
-    GLfloat v14[] = {0.5, -0.5, 0.5};
+    GLfloat v7[] = {full, -radius, -radius};
+    GLfloat v8[] = {full, radius, -radius};
+    GLfloat v9[] = {radius, radius, -radius};
+    GLfloat v10[] = {radius, -radius, -radius};
+    GLfloat v11[] = {full, -radius, radius};
+    GLfloat v12[] = {full, radius, radius};
+    GLfloat v13[] = {radius, radius, radius};
+    GLfloat v14[] = {radius, -radius, radius};
     //FRONT
     glBegin(GL_POLYGON);
     glColor3f (1.5, 0.0, 1.0);
@@ -133,14 +133,6 @@ void GLobj::paintGL()
     glVertex3fv(v13);
     glVertex3fv(v14);
     glEnd();
-    //RIGHT
-    glBegin(GL_POLYGON);
-    glColor3f (1.0, 0.0, 0.0);
-    glVertex3fv(v13);
-    glVertex3fv(v14);
-    glVertex3fv(v12);
-    glVertex3fv(v11);
-    glEnd();
     //LEFT
     glBegin(GL_POLYGON);
     glColor3f (1.0, 1.0, 1.0);
@@ -149,13 +141,13 @@ void GLobj::paintGL()
     glVertex3fv(v9);
     glVertex3fv(v10);
     glEnd();
-    //TOP
+    //RIGHT
     glBegin(GL_POLYGON);
-    glColor3f (1.0, 1.0, 1.0);
+    glColor3f (1.0, 0.0, 0.0);
+    glVertex3fv(v13);
+    glVertex3fv(v14);
     glVertex3fv(v12);
-    glVertex3fv(v8);
-    glVertex3fv(v9);
-    glVertex3fv(v7);
+    glVertex3fv(v11);
     glEnd();
     //BOTTOM
     glBegin(GL_POLYGON);
@@ -164,6 +156,14 @@ void GLobj::paintGL()
     glVertex3fv(v11);
     glVertex3fv(v8);
     glVertex3fv(v10);
+    //TOP
+    glBegin(GL_POLYGON);
+    glColor3f (1.0, 1.0, 1.0);
+    glVertex3fv(v12);
+    glVertex3fv(v8);
+    glVertex3fv(v9);
+    glVertex3fv(v7);
+    glEnd();
 
     glEnd();
     glFlush ();

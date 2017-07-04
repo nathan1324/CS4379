@@ -21,12 +21,6 @@ MainWindow::MainWindow()
 //    QWidget *topFiller = new QWidget;
 //    topFiller->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-//    replacementLabel = new QLabel("Replacement Policies:");
-//    cacheLabel = new QLabel("Cache Type:");
-
-//    textEdit = new QTextEdit();
-//    textEdit->setPlainText(tr("This widget takes file (File|Open)"));
-
 //    QWidget *bottomFiller = new QWidget;
 //    bottomFiller->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
@@ -34,15 +28,17 @@ MainWindow::MainWindow()
  * Main layout construct
  *
  */
+    QHBoxLayout *hlayout1 = new QHBoxLayout;
+    hlayout1->addWidget(replaceGroupBox);
+    hlayout1->addWidget(cacheGroupBox);
+    hlayout1->addWidget(formGroupBox);
+
     QVBoxLayout *layout = new QVBoxLayout;
-    layout->setMargin(5);
+    layout->setMargin(15);
     layout->addWidget(infoLabel);
 //    layout->addWidget(topFiller);
 //    layout->addWidget(bottomFiller);
-//    layout->addWidget(textEdit);
-    layout->addWidget(replaceGroupBox);
-    layout->addWidget(cacheGroupBox);
-    layout->addWidget(formGroupBox);
+    layout->addLayout(hlayout1);
     layout->addWidget(displayGroupBox);
     layout->addWidget(globj);
     widget->setLayout(layout);
@@ -175,7 +171,7 @@ void MainWindow::createChecksGroupBox()
     boxGroup->addButton(checkbox2);
     boxGroup->addButton(checkbox3);
     boxGroup->setExclusive(true);
-    QHBoxLayout *boxLayout = new QHBoxLayout;
+    QVBoxLayout *boxLayout = new QVBoxLayout;
     boxLayout->addWidget(checkbox1);
     boxLayout->addWidget(checkbox2);
     boxLayout->addWidget(checkbox3);
@@ -186,7 +182,7 @@ void MainWindow::createChecksGroupBox()
     buttonGroup->addButton(button1);
     buttonGroup->addButton(button2);
     buttonGroup->setExclusive(true);
-    QHBoxLayout *buttonLayout = new QHBoxLayout;
+    QVBoxLayout *buttonLayout = new QVBoxLayout;
     buttonLayout->addWidget(button1);
     buttonLayout->addWidget(button2);
     cacheGroupBox->setLayout(buttonLayout);
@@ -252,28 +248,17 @@ void MainWindow::createDisplayFormGroupBox()
     display2 = new QLCDNumber(2);
     display3 = new QLCDNumber(2);
     display4 = new QLCDNumber(2);
-//    refWordLabel = new QLabel("Size of a reference word (in bits):");
-//    offsetLabel = new QLabel("Size of the offset field (in bits):");
-//    indexLabel = new QLabel("Size of the index field (in bits):");
-//    tagLabel = new QLabel("Size of the tag field (in bits):");
 
     displayGroupBox = new QGroupBox(tr("Displays:"));
     QFormLayout *formLayout = new QFormLayout;
     formLayout->addRow("Size of a reference word (in bits):", display1);
+    formLayout->addRow(" ", new QLabel);
     formLayout->addRow("Size of the offset field (in bits):", display2);
+    formLayout->addRow(" ", new QLabel);
     formLayout->addRow("Size of the index field (in bits):", display3);
+    formLayout->addRow(" ", new QLabel);
     formLayout->addRow("Size of the tag field (in bits):", display4);
-
-//    QVBoxLayout *hLayout = new QVBoxLayout;
-//    hLayout->setMargin(5);
-//    hLayout->addWidget(refWordLabel);
-//    hLayout->addWidget(display1);
-//    hLayout->addWidget(offsetLabel);
-//    hLayout->addWidget(display2);
-//    hLayout->addWidget(indexLabel);
-//    hLayout->addWidget(display3);
-//    hLayout->addWidget(tagLabel);
-//    hLayout->addWidget(display4);
+    formLayout->addRow(" ", new QLabel);
 
     displayGroupBox->setLayout(formLayout);
 }
